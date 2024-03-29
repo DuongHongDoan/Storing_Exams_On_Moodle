@@ -89,23 +89,22 @@
                     <h4 class="accesshide">Question text</h4>
                     <input type="hidden" name="q6:1_:sequencecheck" value="3">
                     <div class="qtext">{{questiontext}}</div>
-                    {{#answer_info}}
                     <fieldset class="ablock no-overflow visual-scroll-x">
                         <legend class="prompt h6 font-weight-normal sr-only">
                             <span class="sr-only">Question 1</span> Answer
                         </legend>
                         <div class="answer">
+                            {{#ans}}
                             <div class="r0">
                                 <input type="radio" name="q6:1_answer" disabled="disabled" value="0" id="q6:1_answer0" aria-labelledby="q6:1_answer0_label">
                                 <div class="d-flex w-auto" id="q6:1_answer0_label" data-region="answer-label">
                                     <span class="answernumber">a. </span>
-                                    <div class="flex-fill ml-1"><p>{{ans}}</p></div>
+                                    <div class="flex-fill ml-1"><p>{{.}}</p></div>
                                 </div>
                             </div>
-                            
+                            {{/ans}}
                         </div>
                     </fieldset>
-                    {{/answer_info}}
                 </div>
             </div>
         </div>

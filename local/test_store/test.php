@@ -86,39 +86,6 @@ foreach ($contents as $content) {
     if ($quizid == $qaid) {
         $question_arr = explode("||", $content->questions);
         $cnt_question = 1;
-        // $sql_answer = "SELECT qt.id, qas.question, qt.questiontext, qats.questionsummary,
-        // GROUP_CONCAT(qas.answer SEPARATOR '||') AS answers
-        //                 FROM {role} r
-        //                 JOIN {role_assignments} ra ON r.id = ra.roleid
-        //                 JOIN {user} u ON ra.userid = u.id
-        //                 JOIN {quiz_attempts} qa ON u.id = qa.userid
-        //                 JOIN {quiz} q ON qa.quiz = q.id 
-        //                 JOIN {question_attempts} qats ON qats.questionusageid = qa.uniqueid
-        //                 JOIN {question} qt ON qats.questionid = qt.id
-        //                 JOIN {question_answers} qas ON qt.id = qas.question
-        //                 WHERE r.id = ? AND qa.id = ?
-        //                 GROUP BY qt.id";
-
-        // $answers = $DB->get_records_sql($sql_answer, array(5, $quizid));
-
-        // foreach ($answers as $answer_record) {
-        //     $questionId = $answer_record->id;
-        //     $questionText = $answer_record->questiontext;
-        //     $questionsummary = $answer_record->questionsummary;
-        //     $answerss = explode("||", $answer_record->answers);
-
-        //     // echo $answerss;
-        //     echo "Question Text: $questionText<br>";
-        //     // foreach ($question_arr as $question) {
-        //     //     if ($questionText == $question) {
-        //     //         foreach ($answerss as $ans) {
-        //     //             $answer_info[] = [
-        //     //                 'ans' => strip_tags($ans)
-        //     //             ];
-        //     //         }
-        //     //     }
-        //     // }
-        // }
         foreach ($question_arr as $question) {
             $sql_type = "SELECT qats.rightanswer, qats.responsesummary, qtype, qas.state, qats.questionsummary,
                         qt.questiontext 
@@ -145,6 +112,8 @@ foreach ($contents as $content) {
                 $rs = $first_record->responsesummary;
                 $state = $first_record->state;
                 $qsummary = $first_record->questionsummary;
+
+                // echo $qsummary;
             }
             //kiem tra cau tra loi 
             if ($state == 'gradedright') {
@@ -152,25 +121,40 @@ foreach ($contents as $content) {
             } else {
                 $state = 'incorrect';
             }
-            // $answers_array = explode("\n", $qsummary);
-            // // Loại bỏ phần tử đầu tiên (tiêu đề) của mảng
+            $answers_array = explode("\n", $qsummary);
+
+            // Loại bỏ phần tử đầu tiên (tiêu đề) của mảng
             // unset($answers_array[0]);
-            // $answers_array = array_map(function($answer) {
-            //     return preg_replace('/[;:]/', '', trim($answer));
-            // }, $answers_array);
-            // // Loại bỏ khoảng trắng và dấu ; ở đầu mỗi dòng
-            // $answers_array = array_map('trim', $answers_array);
-            // $answers_array = array_filter($answers_array);
+            $answers_array = array_map(function ($answer) {
+                return preg_replace('/[;:]/', '', trim($answer));
+            }, $answers_array);
+            // Loại bỏ khoảng trắng và dấu ; ở đầu mỗi dòng
+            $answers_array = array_map('trim', $answers_array);
+            $answers_array = array_filter($answers_array);
+            // Lấy phần tử đầu tiên của mảng $answers_array gán cho tên câu hỏi
+            $questiontext = array_shift($answers_array);
+            $len = count($answers_array);
+                $answer_array = array();
+            if($qtype == 'truefalse') {
+                $answers_array[] = 'Đúng';
+                $answers_array[] = 'Sai';
+                foreach ($answers_array as $answer) {
+                    // Gán giá trị của $answer vào mảng $answer_array
+                    $answer_array[] = $answer;
+                }
+            }
+            else {
 
-            // // Hiển thị các đáp án
-            // foreach ($answers_array as $answer) {
-            //     $answer_info[] = [
-            //         'ans' => $answer
-            //     ];
-            // }
-
+                // Lặp qua các phần tử còn lại của $answers_array
+                foreach ($answers_array as $answer) {
+                    // Gán giá trị của $answer vào mảng $answer_array
+                    $answer_array[] = $answer;
+                }
+            }
+        
             $content_info[] = [
-                'questiontext' => strip_tags($question),
+                'questiontext' => $questiontext,
+                'ans' => $answer_array,
                 'questionid' => $content->uniqueid,
                 'cnt_question' => $cnt_question,
                 'qtype' => $qtype,
