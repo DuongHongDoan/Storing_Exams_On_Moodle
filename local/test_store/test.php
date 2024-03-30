@@ -134,16 +134,15 @@ foreach ($contents as $content) {
             // Lấy phần tử đầu tiên của mảng $answers_array gán cho tên câu hỏi
             $questiontext = array_shift($answers_array);
             $len = count($answers_array);
-                $answer_array = array();
-            if($qtype == 'truefalse') {
+            $answer_array = array();
+            if ($qtype == 'truefalse') {
                 $answers_array[] = 'Đúng';
                 $answers_array[] = 'Sai';
                 foreach ($answers_array as $answer) {
                     // Gán giá trị của $answer vào mảng $answer_array
                     $answer_array[] = $answer;
                 }
-            }
-            else {
+            } else {
 
                 // Lặp qua các phần tử còn lại của $answers_array
                 foreach ($answers_array as $answer) {
@@ -151,7 +150,7 @@ foreach ($contents as $content) {
                     $answer_array[] = $answer;
                 }
             }
-        
+
             $content_info[] = [
                 'questiontext' => $questiontext,
                 'ans' => $answer_array,
