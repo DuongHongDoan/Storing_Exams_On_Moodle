@@ -118,8 +118,12 @@ foreach ($contents as $content) {
             //kiem tra cau tra loi 
             if ($state == 'gradedright') {
                 $state = 'correct';
+                // $icon = 'check';
+                // $icon_color = 'text-success';
             } else {
                 $state = 'incorrect';
+                // $icon = 'remove';
+                // $icon_color = 'text-danger';
             }
             $answers_array = explode("\n", $qsummary);
 
@@ -139,15 +143,56 @@ foreach ($contents as $content) {
                 $answers_array[] = 'Đúng';
                 $answers_array[] = 'Sai';
                 foreach ($answers_array as $answer) {
+                    if($rs == $answer) {
+                        $checked = 'checked';
+                        if($state == 'correct') {
+                            $icon = 'check';
+                            $icon_color = 'text-success';
+                        }
+                        else{
+                            $icon = 'remove';
+                            $icon_color = 'text-danger';
+                        }
+                    }
+                    else {
+                        $checked ='';
+                        $icon = '';
+                        $icon_color = '';
+                    }
                     // Gán giá trị của $answer vào mảng $answer_array
-                    $answer_array[] = $answer;
+                    $answer_array[] = [
+                        'a' => $answer,
+                        'checked' => $checked,
+                        'icon' => $icon,
+                        'icon_color' => $icon_color
+                    ];
                 }
             } else {
-
                 // Lặp qua các phần tử còn lại của $answers_array
                 foreach ($answers_array as $answer) {
+                    if($rs == $answer) {
+                        $checked = 'checked';
+                        if($state == 'correct') {
+                            $icon = 'check';
+                            $icon_color = 'text-success';
+                        }
+                        else{
+                            $icon = 'remove';
+                            $icon_color = 'text-danger';
+                        }
+                    }
+                    else {
+                        $checked ='';
+                        $icon = '';
+                        $icon_color = '';
+                    }
                     // Gán giá trị của $answer vào mảng $answer_array
-                    $answer_array[] = $answer;
+                    $answer_array[] = [
+                        'a' => $answer,
+                        'checked' => $checked,
+                        'icon' => $icon,
+                        'icon_color' => $icon_color
+                    ];
                 }
             }
 
@@ -166,7 +211,7 @@ foreach ($contents as $content) {
 $data = [
     'table_info' => $table_info,
     'content_info' => $content_info,
-    'answer_info' => $answer_info
+    'increment' => $helper_increment
 ];
 echo $OUTPUT->render_from_template('local_test_store/test', $data);
 // --/body

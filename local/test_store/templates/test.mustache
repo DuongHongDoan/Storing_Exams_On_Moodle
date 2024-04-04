@@ -96,11 +96,9 @@
                         <div class="answer">
                             {{#ans}}
                             <div class="r0">
-                                <input type="radio" name="q6:1_answer" disabled="disabled" value="0" id="q6:1_answer0" aria-labelledby="q6:1_answer0_label">
-                                <div class="d-flex w-auto" id="q6:1_answer0_label" data-region="answer-label">
-                                    <span class="answernumber">a. </span>
-                                    <div class="flex-fill ml-1"><p>{{.}}</p></div>
-                                </div>
+                                <input type="radio" disabled="disabled" {{checked}}>
+                                <label class="ml-1">{{a}}</label>
+                                <span class="ml-1"><i class="icon fa fa-{{icon}} {{icon_color}} fa-fw" ></i></span>
                             </div>
                             {{/ans}}
                         </div>
