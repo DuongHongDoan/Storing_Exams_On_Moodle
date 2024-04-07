@@ -143,55 +143,63 @@ foreach ($contents as $content) {
                 $answers_array[] = 'Đúng';
                 $answers_array[] = 'Sai';
                 foreach ($answers_array as $answer) {
-                    if($rs == $answer) {
+                    if ($rs == $answer) {
                         $checked = 'checked';
-                        if($state == 'correct') {
+                        if ($state == 'correct') {
                             $icon = 'check';
                             $icon_color = 'text-success';
-                        }
-                        else{
+                            $appearance = 'width: 12px; height: 12px; border-radius: 50%; background-color: black;';
+                        } else {
                             $icon = 'remove';
                             $icon_color = 'text-danger';
+                            $appearance = 'width: 12px; height: 12px; border-radius: 50%; background-color: black;';
                         }
-                    }
-                    else {
-                        $checked ='';
+                    } else {
+                        $checked = '';
                         $icon = '';
                         $icon_color = '';
+                        $appearance = '';
+                    }
+                    if ($ra == $answer && $rs != $answer) {
+                        $appearance = 'appearance: none; width: 12px; height: 12px; border-radius: 50%; background-color: black;';
                     }
                     // Gán giá trị của $answer vào mảng $answer_array
                     $answer_array[] = [
                         'a' => $answer,
                         'checked' => $checked,
                         'icon' => $icon,
-                        'icon_color' => $icon_color
+                        'icon_color' => $icon_color,
+                        'appearance' => $appearance
                     ];
                 }
             } else {
                 // Lặp qua các phần tử còn lại của $answers_array
                 foreach ($answers_array as $answer) {
-                    if($rs == $answer) {
+                    if ($rs == $answer) {
                         $checked = 'checked';
-                        if($state == 'correct') {
+                        if ($state == 'correct') {
                             $icon = 'check';
                             $icon_color = 'text-success';
-                        }
-                        else{
+                        } else {
                             $icon = 'remove';
                             $icon_color = 'text-danger';
                         }
-                    }
-                    else {
-                        $checked ='';
+                    } else {
+                        $checked = '';
                         $icon = '';
                         $icon_color = '';
+                        $appearance = '';
+                    }
+                    if ($ra == $answer && $rs != $answer) {
+                        $appearance = 'appearance: none; width: 12px; height: 12px; border-radius: 50%; background-color: black; margin-left: 9px;';
                     }
                     // Gán giá trị của $answer vào mảng $answer_array
                     $answer_array[] = [
                         'a' => $answer,
                         'checked' => $checked,
                         'icon' => $icon,
-                        'icon_color' => $icon_color
+                        'icon_color' => $icon_color,
+                        'appearance' => $appearance
                     ];
                 }
             }
