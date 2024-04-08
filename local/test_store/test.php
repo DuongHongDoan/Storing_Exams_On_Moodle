@@ -137,7 +137,6 @@ foreach ($contents as $content) {
             $answers_array = array_filter($answers_array);
             // Lấy phần tử đầu tiên của mảng $answers_array gán cho tên câu hỏi
             $questiontext = array_shift($answers_array);
-            $len = count($answers_array);
             $answer_array = array();
             if ($qtype == 'truefalse') {
                 $answers_array[] = 'Đúng';
@@ -219,8 +218,10 @@ foreach ($contents as $content) {
 $data = [
     'table_info' => $table_info,
     'content_info' => $content_info,
-    'increment' => $helper_increment
+    'increment' => $helper_increment,
+    'qaid' => $quizid
 ];
-echo $OUTPUT->render_from_template('local_test_store/test', $data);
+$html = $OUTPUT->render_from_template('local_test_store/test', $data);
+echo $html;
 // --/body
 echo $OUTPUT->footer();
