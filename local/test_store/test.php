@@ -141,8 +141,9 @@ foreach ($contents as $content) {
             if ($qtype == 'truefalse') {
                 $answers_array[] = 'Đúng';
                 $answers_array[] = 'Sai';
+                $dem = 'true';
                 foreach ($answers_array as $answer) {
-                    if ($rs == $answer) {
+                    if (trim($rs) == $answer) {
                         $checked = 'checked';
                         if ($state == 'correct') {
                             $icon = 'check';
@@ -159,7 +160,7 @@ foreach ($contents as $content) {
                         $icon_color = '';
                         $appearance = '';
                     }
-                    if ($ra == $answer && $rs != $answer) {
+                    if (trim($ra) == $answer && trim($rs) != $answer) {
                         $appearance = 'appearance: none; width: 12px; height: 12px; border-radius: 50%; background-color: black;';
                     }
                     // Gán giá trị của $answer vào mảng $answer_array
@@ -168,20 +169,25 @@ foreach ($contents as $content) {
                         'checked' => $checked,
                         'icon' => $icon,
                         'icon_color' => $icon_color,
-                        'appearance' => $appearance
+                        'appearance' => $appearance,
+                        'dem' => $dem
                     ];
+                    $dem = 'false';
                 }
             } else {
+                $dem = 1;
                 // Lặp qua các phần tử còn lại của $answers_array
                 foreach ($answers_array as $answer) {
-                    if ($rs == $answer) {
+                    if (trim($rs) == $answer) {
                         $checked = 'checked';
                         if ($state == 'correct') {
                             $icon = 'check';
                             $icon_color = 'text-success';
+                            $appearance = '';
                         } else {
                             $icon = 'remove';
                             $icon_color = 'text-danger';
+                            $appearance = '';
                         }
                     } else {
                         $checked = '';
@@ -189,7 +195,7 @@ foreach ($contents as $content) {
                         $icon_color = '';
                         $appearance = '';
                     }
-                    if ($ra == $answer && $rs != $answer) {
+                    if (trim($ra) == $answer && trim($rs) != $answer) {
                         $appearance = 'appearance: none; width: 12px; height: 12px; border-radius: 50%; background-color: black; margin-left: 9px;';
                     }
                     // Gán giá trị của $answer vào mảng $answer_array
@@ -198,8 +204,10 @@ foreach ($contents as $content) {
                         'checked' => $checked,
                         'icon' => $icon,
                         'icon_color' => $icon_color,
-                        'appearance' => $appearance
+                        'appearance' => $appearance,
+                        'dem' => $dem
                     ];
+                    $dem++;
                 }
             }
 

@@ -30,15 +30,15 @@ foreach($records as $record) {
     $fname = $record->firstname;
     $lname = $record->lastname;
     $start = $record->timestart;
-    $tstart = date("d-m-Y H:i:s", $start);
+    $tstart = date("d-m-Y, H:i:s", $start);
     $finish = $record->timefinish;
-    $tfinish = date("d-m-Y H:i:s", $finish);
-    $state = $record->state;
+    $tfinish = date("d-m-Y, H:i:s", $finish);
+    $state_info = $record->state;
     $timesum = format_time($finish - $start);
     $sumgradesqa = format_float($record->sumqa, 2);
     $sumgradesq = format_float($record->sumq, 2);
     $rawgrade = format_float(($record->sumqa * $record->grade) / $record->sumq,2);
-    $grade = $record->grade;
+    $grade = format_float($record->grade, 2);
     $percent = format_float(($rawgrade / $record->grade) * 100, 0);
 }
 // ----------
@@ -107,15 +107,67 @@ foreach($contents as $content) {
         if ($qtype == 'truefalse') {
             $answers_array[] = 'Đúng';
             $answers_array[] = 'Sai';
-            foreach($answers_array as $answer_array) {
+            foreach($answers_array as $answer) {
+                if (trim($rs) == $answer) {
+                    $checked = 'checked';
+                    if ($state == 'gradedright') {
+                        $icon_check = '&check;';
+                        $appearance = '';
+                        $solid_circle = '';
+                    } else {
+                        $icon_check = '&cross;';
+                        $appearance = '';
+                        $solid_circle = '';
+                    }
+                }else {
+                    $checked = '';
+                    $icon_check = '';
+                    $appearance = '';
+                    $solid_circle = '';
+                }
+                if (trim($ra) == $answer && trim($rs) != $answer) {
+                    $appearance = 'display: none; width: 12px; height: 12px; border-radius: 50%; background-color: black;';
+                    $solid_circle = '<span style="margin-left: 20px; font-size: 18px;">&#x25CF;</span>';
+                }
                 $aa[] = [
-                    'a' => $answer_array
+                    'a' => $answer,
+                    'checked' => $checked,
+                    'icon' => $icon,
+                    'icon_color' => $icon_color,
+                    'appearance' => $appearance,
+                    'icon_check' => $icon_check,
+                    'solid_circle' => $solid_circle
                 ];
             }
         }else {
-            foreach($answers_array as $answer_array) {
+            foreach($answers_array as $answer) {
+                if (trim($rs) == $answer) {
+                    $checked = 'checked';
+                    if ($state == 'gradedright') {
+                        $icon_check = '&check;';
+                        $solid_circle = '';
+                        $appearance = '';
+                    } else {
+                        $icon_check = '&cross;';
+                        $solid_circle = '';
+                        $appearance = '';
+                    }
+                } else {
+                    $checked = '';
+                    $icon_check = '';
+                    $appearance = '';
+                    $solid_circle = '';
+                }
+                if (trim($ra) == $answer && trim($rs) != $answer) {
+                    $appearance = 'display: none; width: 15px; height: 15px; border-radius: 50%; background-color: black;';
+                    $solid_circle = '<span style="margin-left: 20px; font-size: 18px;">&#x25CF;</span>';
+                }
                 $aa[] = [
-                    'a' => $answer_array
+                    'a' => $answer,
+                    'checked' => $checked,
+                    'appearance' => $appearance,
+                    'icon_check' => $icon_check,
+                    'solid_circle' => $solid_circle
                 ];
             }
         }
@@ -132,8 +184,7 @@ $pdf = new Dompdf();
 
 ob_start();
 require_once('detail_test.php');
-$html = ob_get_contents();
-ob_get_clean();
+$html = ob_get_clean();
 
 $pdf->loadHtml($html);
 
@@ -142,6 +193,15 @@ $pdf->setPaper('A4', 'portrait');
 
 // Render the HTML as PDF
 $pdf->render();
+
+// // Lấy số trang
+// $totalPages = $pdf->getCanvas()->get_page_count();
+
+// // Lặp qua từng trang để thêm số trang
+// for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
+//     // Đặt vị trí cursor tới một vị trí cụ thể trên trang
+//     $pdf->getCanvas()->page_text(30, 10, "$pageNumber", null, 8, array(0,0,0));
+// }
 
 // Output the generated PDF to Browser
 $pdf->stream('rs.pdf', Array('Attachment'=>0));

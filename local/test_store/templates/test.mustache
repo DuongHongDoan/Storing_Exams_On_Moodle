@@ -97,8 +97,8 @@
                             {{#ans}}
                             <div class="r0">
                                 <span><i class="icon fa fa-{{icon}} {{icon_color}} fa-fw" ></i></span>
-                                <input type="radio" disabled="disabled" {{checked}} style="{{appearance}}">
-                                <label class="ml-1">{{a}}</label>
+                                <input type="radio" id="q{{questionid}}:{{cnt_question}}_answer{{dem}}" disabled="disabled" {{checked}} style="{{appearance}}">
+                                <label for="q{{questionid}}:{{cnt_question}}_answer{{dem}}" class="ml-1">{{a}}</label>
                             </div>
                             {{/ans}}
                         </div>

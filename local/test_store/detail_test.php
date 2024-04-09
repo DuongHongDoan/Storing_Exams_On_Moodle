@@ -6,9 +6,7 @@
     <title>Bài thi</title>
     <style>
         *{ font-family: DejaVu Sans;}
-        html{
-            margin: 0;
-        }
+        
 
         body {
             margin: 0 50px;
@@ -24,12 +22,37 @@
 
         th {
             text-align: left;
+            width: 30%;
         }
 
         .content {
             margin-top: 8px;
         }
 
+        .answer {
+            margin-left: 5px;
+            text-align: justify;
+        }
+        .r0 {
+            position: relative;
+        }
+        .icon {
+            position: absolute;
+        }
+        input[type="radio"] {
+            margin: 0;
+            padding: 0;
+        }
+
+        label {
+            margin: 0;
+            padding: 0;
+        }
+
+        input[type="radio"],
+        label, span {
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +75,7 @@
             </tr>
             <tr>
                 <th class="cell" scope="row">Trạng thái</th>
-                <td class="cell"><?=$state?></td>
+                <td class="cell"><?=$state_info?></td>
             </tr>
             <tr>
                 <th class="cell" scope="row">Kết thúc</th>
@@ -77,18 +100,17 @@
     <!-- ---------- -->
     <?php foreach ($q_info as $key => $info): ?>
     <div class="content">
-        <div class="qtext">Câu <?=$key+1?>: <?=$info['qtext']?></div>
-            <fieldset>
-                <div class="answer">
-                    <?php foreach ($info['aa'] as $answer): ?>
-                    <div class="r0">
-                        <i class="icon fa fa-{{icon}} {{icon_color}} fa-fw"></i>
-                        <input type="radio" disabled="disabled" <?= $checked ?> style="<?= $appearance ?>">
-                        <label class="ml-1"><?= $answer['a'] ?></label>
-                    </div>
-                    <?php endforeach; ?>
+        <div class="qtext"><b>Câu <?=$key+1?>: <?=$info['qtext']?></b></div>
+            <div class="answer">
+                <?php foreach ($info['aa'] as $answer): ?>
+                <div class="r0">
+                    <span class="icon"><?= $answer['icon_check'] ?></span>
+                    <input class="tt" type="radio" disabled="disabled" <?= $answer['checked'] ?> style="margin-left: 20px; <?= $answer['appearance'] ?>">
+                    <?= $answer['solid_circle'] ?>
+                    <label class="ml"><?= $answer['a'] ?></label>
                 </div>
-            </fieldset>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
     <?php endforeach; ?>
