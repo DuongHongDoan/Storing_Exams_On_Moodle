@@ -194,14 +194,12 @@ $pdf->setPaper('A4', 'portrait');
 // Render the HTML as PDF
 $pdf->render();
 
-// // Lấy số trang
-// $totalPages = $pdf->getCanvas()->get_page_count();
+// Lặp qua từng trang để thêm số trang
+// Tính toán vị trí để đặt số trang ở dưới, chính giữa
+$x = $pdf->getCanvas()->get_width() / 2;
+$y = $pdf->getCanvas()->get_height() - 30; // Khoảng cách từ dưới lên
 
-// // Lặp qua từng trang để thêm số trang
-// for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
-//     // Đặt vị trí cursor tới một vị trí cụ thể trên trang
-//     $pdf->getCanvas()->page_text(30, 10, "$pageNumber", null, 8, array(0,0,0));
-// }
+$pdf->getCanvas()->page_text($x, $y, "{PAGE_NUM}", null, 8, array(0,0,0));
 
 // Output the generated PDF to Browser
 $pdf->stream('rs.pdf', Array('Attachment'=>0));
