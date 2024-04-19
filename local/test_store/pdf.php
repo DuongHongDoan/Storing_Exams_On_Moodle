@@ -15,7 +15,7 @@ use Dompdf\Dompdf;
 //lay id tu tham so cua URL
 $quizid = $_GET['quizid'];
 $sql_info = "SELECT DISTINCT qa.id qaid, qa.quiz, qa.state, qa.timestart, qa.timefinish, qa.sumgrades sumqa, q.sumgrades sumq,
-            q.grade, q.course, u.firstname, u.lastname, u.username, u.id, g.rawgrade
+            q.grade, q.course, u.firstname, u.lastname, u.username, u.id, g.rawgrade, q.name
             FROM {role} r
             JOIN {role_assignments} ra ON r.id = ra.roleid
             JOIN {user} u ON ra.userid = u.id
@@ -27,6 +27,7 @@ $sql_info = "SELECT DISTINCT qa.id qaid, qa.quiz, qa.state, qa.timestart, qa.tim
 $records = $DB->get_records_sql($sql_info);
 foreach($records as $record) {
     $q = $record->qaid;
+    $name = $record->name;
     $fname = $record->firstname;
     $lname = $record->lastname;
     $start = $record->timestart;

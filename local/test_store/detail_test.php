@@ -56,7 +56,7 @@
     </style>
 </head>
 <body>
-    <h1>Bài thi</h1>
+    <h1>Bài thi: <?=$name?></h1>
     <table class="table table-bordered table-sm">  
         <tbody>
             <tr>
