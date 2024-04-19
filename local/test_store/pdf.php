@@ -202,6 +202,7 @@ $y = $pdf->getCanvas()->get_height() - 30; // Khoảng cách từ dưới lên
 
 $pdf->getCanvas()->page_text($x, $y, "{PAGE_NUM}", null, 8, array(0,0,0));
 
+$filename = "Bai_" . $quizid . ".pdf";
 // Output the generated PDF to Browser
-$pdf->stream('rs.pdf', Array('Attachment'=>0));
+$pdf->stream($filename, Array('Attachment'=>0));
 ?>

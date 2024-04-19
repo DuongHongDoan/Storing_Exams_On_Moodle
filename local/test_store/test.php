@@ -112,18 +112,12 @@ foreach ($contents as $content) {
                 $rs = $first_record->responsesummary;
                 $state = $first_record->state;
                 $qsummary = $first_record->questionsummary;
-
-                // echo $qsummary;
             }
             //kiem tra cau tra loi 
             if ($state == 'gradedright') {
                 $state = 'correct';
-                // $icon = 'check';
-                // $icon_color = 'text-success';
             } else {
                 $state = 'incorrect';
-                // $icon = 'remove';
-                // $icon_color = 'text-danger';
             }
             $answers_array = explode("\n", $qsummary);
 
@@ -223,11 +217,13 @@ foreach ($contents as $content) {
         }
     }
 }
+
+$url = "pdf.php?quizid=$quizid";
 $data = [
     'table_info' => $table_info,
     'content_info' => $content_info,
     'increment' => $helper_increment,
-    'qaid' => $quizid
+    'url' => $url
 ];
 $html = $OUTPUT->render_from_template('local_test_store/test', $data);
 echo $html;
